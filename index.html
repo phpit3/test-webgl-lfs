@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="assets/Logo.png">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <title>Fantasy_war</title>
+  </head>
+  <body>
+    <!-- <div class="webgl-wrapper">
+      <div class="aspect"></div>
+      <div class="webgl-content">
+        <div id="unityContainer"> -->
+          <canvas id="unity-canvas" style="width: calc(1280 * 100vh / 860); height: 100vh; background: url('Build/test_socket_io_unity.jpg') center / cover"></canvas>
+          
+          <div id="custom-logo"></div>
+          <div id="custom-loader">
+            <div id="fill"></div>
+          </div>
+        <!-- </div>
+      </div>
+    </div> -->
+
+    <!-- <div class="info">
+      <p>unity webgl responsive</p>
+      <p>press F or <a href="#" onclick="myGameInstance.SetFullscreen(1)">click here</a> to toggle fullscreen</p>
+    </div> -->
+
+    <!-- <div class="centered">
+      <h2>Message from Unity</h2>
+    
+      <p id="lblMessage">...</p>
+
+      <button onclick="sendMessageToUnity()">Send</button>
+    </div> -->
+
+    <script src="MyLoader.js"></script>
+    
+    <script>
+      // Custom progressbar function
+      function onProgress(progress) {
+        // Change fill of the progress bar
+        const fill = document.getElementById("fill");
+        // fill.style.width = progress * 100 + "%";
+        fill.animate(
+          [
+            { width: (progress * 100) + "%" }
+          ],
+          {
+            duration: 300,
+            fill: "forwards"
+          }
+        );
+
+        // If loaded, remove loader
+        if (progress === 1) {
+            const loader = document.getElementById("custom-loader");
+            loader.remove();
+
+            const logo = document.getElementById("custom-logo");
+            logo.remove();
+        }
+      }
+    </script>
+
+    <script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/test_socket_io_unity.data",
+        frameworkUrl: "Build/test_socket_io_unity.framework.js",
+        codeUrl: "Build/test_socket_io_unity.wasm",
+        memoryUrl: "Build/",
+        symbolsUrl: "Build/",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "BeeBinan",
+        productName: "Fantasy_war",
+        productVersion: "1.0",
+      }, onProgress).then((unityInstance) => {
+        myGameInstance = unityInstance;
+      });
+    </script>
+
+    <!-- check for F key press to toggle full screen -->
+    <script>
+      var isFullscreen = false;
+
+      document.addEventListener('keydown', function(event) {
+          if (event.which === 70) {
+              if (!isFullscreen) {
+                myGameInstance.SetFullscreen(1);
+              } else {
+                myGameInstance.SetFullscreen(0);
+              }
+              isFullscreen = !isFullscreen;
+          }
+      });
+    </script>
+
+    <script>
+      var query = window.location.search.substring(1);
+      console.log(query);
+
+      // Function which receives a message from Unity
+      function receiveMessageFromUnity(txt) {
+        // Get element to assign the message
+        const lblMessage = document.getElementById("lblMessage");
+
+        // Assign received from Unity message
+        lblMessage.innerText = txt;
+
+        parent.postMessage({ mess: txt, key: 'token_logined' }, "*");
+      }
+
+      // Function which sends the message to Unity
+      function sendMessageToUnity() {
+        const message = 'token_cookie';
+
+        // Send message to the Unity scene
+        // Params: "Target object in the scene", "Function name", "Parameters"
+        myGameInstance.SendMessage(
+            "[Bridge]",
+            "ReceiveMessageFromPage",
+            message
+        );
+      }
+    </script>
+    <script src="https://cdn.socket.io/socket.io-2.3.0.js"></script>
+  </body>
+</html>
