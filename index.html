@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="assets/Logo.png">
+    <link rel="shortcut icon" href="assets/css/Logo.png">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -16,7 +16,7 @@
       <div class="aspect"></div>
       <div class="webgl-content">
         <div id="unityContainer"> -->
-          <canvas id="unity-canvas" style="width: calc(1280 * 100vh / 860); height: 100vh; background: url('Build/test_socket_io_unity.jpg') center / cover"></canvas>
+          <canvas id="unity-canvas" style="width: calc(1280 * 100vh / 720); height: 100vh; background: url('Build/webgl.jpg') center / cover"></canvas>
           
           <div id="custom-logo"></div>
           <div id="custom-loader">
@@ -70,9 +70,9 @@
 
     <script>
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/test_socket_io_unity.data",
-        frameworkUrl: "Build/test_socket_io_unity.framework.js",
-        codeUrl: "Build/test_socket_io_unity.wasm",
+        dataUrl: "Build/webgl.data",
+        frameworkUrl: "Build/webgl.framework.js",
+        codeUrl: "Build/webgl.wasm",
         memoryUrl: "Build/",
         symbolsUrl: "Build/",
         streamingAssetsUrl: "StreamingAssets",
